@@ -1,5 +1,7 @@
 ﻿
-public class Videojuego {
+using Juegoteca.Biblioteca.Interfaces;
+
+public class Videojuego: IVideojuego {
     public string Titulo { get; set; }
     public string Estudio { get; set; }
     public int HorasJuego { get; set; }
@@ -18,6 +20,11 @@ public class Videojuego {
         return $" {Titulo}- {Estudio} ({HorasJuego}h)";
     }
 }
+
+
+
+
+
 
 
 
