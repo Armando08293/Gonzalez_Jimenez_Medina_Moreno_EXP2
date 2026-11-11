@@ -1,17 +1,18 @@
 ﻿using Juegoteca.Biblioteca.Interfaces;
-
+using Juegoteca.Biblioteca.Modelos;
+//Correcto
 namespace Juegoteca.Biblioteca.Gestores;
 
 public class GestorVideojuegos : IGestorVideojuegos
 {
-    public List<IVideojuego> JuegosDisponibles { get; }
+    public List<Videojuego> JuegosDisponibles { get; }
 
     public GestorVideojuegos()
     {
-        JuegosDisponibles = new List<IVideojuego>();
+        JuegosDisponibles = new List<Videojuego>();
     }
 
-    public void AgregarJuego(IVideojuego juego)
+    public void AgregarJuego(Videojuego juego)
     {
         if (!JuegosDisponibles.Any(j => j.Titulo.Equals(juego.Titulo,StringComparison.OrdinalIgnoreCase)))
         {
@@ -19,7 +20,7 @@ public class GestorVideojuegos : IGestorVideojuegos
         }
     }
 
-    public bool EliminarJuego(IVideojuego juego)
+    public bool EliminarJuego(Videojuego juego)
     {
         return JuegosDisponibles.Remove(juego);
     }
@@ -34,7 +35,7 @@ public class GestorVideojuegos : IGestorVideojuegos
         return false;
     }
 
-    public List<IVideojuego> BuscarPorTitulo(string texto)
+    public List<Videojuego> BuscarPorTitulo(string texto)
     {
         return JuegosDisponibles
             .Where(j => j.Titulo.Contains(texto,StringComparison.OrdinalIgnoreCase))
@@ -46,14 +47,13 @@ public class GestorVideojuegos : IGestorVideojuegos
         JuegosDisponibles.Clear();
     }
 
-    // --- Algoritmos implementados a mano (QuickSort, MergeSort, Búsqueda Binaria) ---
-
-    public void QuickSort(List<IVideojuego> lista)
+    //Algorimos 
+    public void QuickSort(List<Videojuego> lista)
     {
         QuickSortRec(lista,0,lista.Count - 1);
     }
 
-    private void QuickSortRec(List<IVideojuego> lista,int izq,int der)
+    private void QuickSortRec(List<Videojuego> lista,int izq,int der)
     {
         if (izq < der)
         {
@@ -63,7 +63,7 @@ public class GestorVideojuegos : IGestorVideojuegos
         }
     }
 
-    private int Particionar(List<IVideojuego> lista,int izq,int der)
+    private int Particionar(List<Videojuego> lista,int izq,int der)
     {
         int pivoteHoras = lista[der].HorasJuego;
         int i = izq - 1;
@@ -84,9 +84,9 @@ public class GestorVideojuegos : IGestorVideojuegos
         return i + 1;
     }
 
-    public List<IVideojuego> MergeSort(List<IVideojuego> lista)
+    public List<Videojuego> MergeSort(List<Videojuego> lista)
     {
-        if (lista.Count <= 1) return new List<IVideojuego>(lista);
+        if (lista.Count <= 1) return new List<Videojuego>(lista);
 
         int medio = lista.Count / 2;
         var izq = MergeSort(lista.GetRange(0,medio));
@@ -95,9 +95,9 @@ public class GestorVideojuegos : IGestorVideojuegos
         return Unir(izq,der);
     }
 
-    private List<IVideojuego> Unir(List<IVideojuego> izq,List<IVideojuego> der)
+    private List<Videojuego> Unir(List<Videojuego> izq,List<Videojuego> der)
     {
-        var resultado = new List<IVideojuego>();
+        var resultado = new List<Videojuego>();
         int i = 0, j = 0;
 
         while (i < izq.Count && j < der.Count)
@@ -122,7 +122,6 @@ public class GestorVideojuegos : IGestorVideojuegos
 
     public int BusquedaBinaria(string titulo)
     {
-        // Ordenamos una copia local por Título para búsqueda binaria
         var copia = JuegosDisponibles.OrderBy(j => j.Titulo,StringComparer.OrdinalIgnoreCase).ToList();
         int izq = 0;
         int der = copia.Count - 1;
@@ -134,7 +133,6 @@ public class GestorVideojuegos : IGestorVideojuegos
 
             if (comparacion == 0)
             {
-                // Retornar el índice equivalente en la lista original
                 return JuegosDisponibles.IndexOf(copia[medio]);
             }
             if (comparacion < 0)
@@ -149,4 +147,3 @@ public class GestorVideojuegos : IGestorVideojuegos
         return -1;
     }
 }
-
