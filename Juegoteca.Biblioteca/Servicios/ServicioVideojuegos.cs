@@ -8,7 +8,6 @@ namespace Juegoteca.Biblioteca.Servicios {
         public IExportador Exportador { get; set; }
         public List<Usuario> Usuarios { get; set; }
 
-        // Constructor con inyección de dependencias
         public ServicioVideojuegos(IGestorVideojuegos gestor, IExportador exportador)
         {
             Gestor = gestor ?? throw new ArgumentNullException(nameof(gestor)); 
